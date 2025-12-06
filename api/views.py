@@ -11,7 +11,21 @@ class ParsePipelineView(APIView):
         nodes,edges = req.data.values()
         # for calculating total number of nodes
         nodeSet = set()
+        edgeSet = set()
         for edge in edges:
             nodeSet.add(edge['source'])
             nodeSet.add(edge['target'])
-        return Response({'number of nodes': len(nodeSet),'number of edges': len(edges)})
+        # to avoid duplicate edges
+        for edge in edges:
+            edge_key = (edge['source'], edge['target'])
+            edgeSet.add(edge_key)
+        
+        # creating adjacency list
+        adj = {}
+        for source,target in edgeSet:
+            if source not in adj:
+                adj[source] = set()
+            adj[source].add(target)
+        print(adj)
+
+        return Response({'number of nodes': len(nodeSet), 'number of edges': len(edgeSet)})
