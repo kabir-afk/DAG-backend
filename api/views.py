@@ -9,4 +9,9 @@ class ReadRoot(APIView):
 class ParsePipelineView(APIView):
     def post(self,req):
         nodes,edges = req.data.values()
-        return Response({'number of nodes': len(nodes),'number of edges': len(edges)})
+        # for calculating total number of nodes
+        nodeSet = set()
+        for edge in edges:
+            nodeSet.add(edge['source'])
+            nodeSet.add(edge['target'])
+        return Response({'number of nodes': len(nodeSet),'number of edges': len(edges)})
