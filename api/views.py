@@ -8,4 +8,5 @@ class ReadRoot(APIView):
 
 class ParsePipelineView(APIView):
     def post(self,req):
-        return Response({'status': 'parsed'})
+        nodes,edges = req.data.values()
+        return Response({'number of nodes': len(nodes),'number of edges': len(edges)})
