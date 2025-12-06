@@ -22,6 +22,8 @@ class ParsePipelineView(APIView):
         
         # creating adjacency list
         adj = {}
+        for node in nodeSet:
+            adj[node] = set()
         for source,target in edgeSet:
             if source not in adj:
                 adj[source] = set()
